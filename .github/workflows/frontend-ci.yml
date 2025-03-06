@@ -18,6 +18,9 @@ jobs:
           echo "Current Directory: $(pwd)"
           echo "GitHub Workspace: $GITHUB_WORKSPACE"
           ls -al $GITHUB_WORKSPACE
+          ls -al starter
+          ls -al starter/frontend  # Check if frontend folder exists
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -44,6 +47,9 @@ jobs:
           echo "Current Directory: $(pwd)"
           echo "GitHub Workspace: $GITHUB_WORKSPACE"
           ls -al $GITHUB_WORKSPACE
+          ls -al starter
+          ls -al starter/frontend  # Check if frontend folder exists
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -71,6 +77,9 @@ jobs:
           echo "Current Directory: $(pwd)"
           echo "GitHub Workspace: $GITHUB_WORKSPACE"
           ls -al $GITHUB_WORKSPACE
+          ls -al starter
+          ls -al starter/frontend  # Check if frontend folder exists
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
