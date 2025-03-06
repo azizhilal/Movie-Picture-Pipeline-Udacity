@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ../setup/frontend
+        working-directory: ../starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '../setup/frontend/.nvmrc'
+          node-version-file: '../starter/frontend/.nvmrc'
           cache: 'npm'
-          cache-dependency-path: '../setup/frontend/package-lock.json'
+          cache-dependency-path: '../starter/frontend/package-lock.json'
       - name: Install dependencies
         run: npm ci
       - name: Run linting
@@ -30,15 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ../setup/frontend
+        working-directory: ../starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '../setup/frontend/.nvmrc'
+          node-version-file: '../starter/frontend/.nvmrc'
           cache: 'npm'
-          cache-dependency-path: '../setup/frontend/package-lock.json'
+          cache-dependency-path: '../starter/frontend/package-lock.json'
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -49,15 +49,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ../setup/frontend
+        working-directory: ../starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '../setup/frontend/.nvmrc'
+          node-version-file: '../starter/frontend/.nvmrc'
           cache: 'npm'
-          cache-dependency-path: '../setup/frontend/package-lock.json'
+          cache-dependency-path: '../starter/frontend/package-lock.json'
       - name: Install dependencies
         run: npm ci
       - name: Build application
