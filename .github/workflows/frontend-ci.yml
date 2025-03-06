@@ -12,83 +12,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Debug Path
-        run: |
-          echo "Current Directory: $(pwd)"
-          echo "GitHub Workspace: $GITHUB_WORKSPACE"
-          ls -al $GITHUB_WORKSPACE
-          ls -al $GITHUB_WORKSPACE/starter
-          ls -al $GITHUB_WORKSPACE/starter/frontend
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: ${{ github.workspace }}/starter/frontend/package-lock.json
-
+          cache-dependency-path: starter/frontend/package-lock.json
       - name: Install dependencies
         run: npm ci
-        working-directory: ${{ github.workspace }}/starter/frontend
-
+        working-directory: starter/frontend
       - name: Run linting
         run: npm run lint
-        working-directory: ${{ github.workspace }}/starter/frontend
+        working-directory: starter/frontend
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Debug Path
-        run: |
-          echo "Current Directory: $(pwd)"
-          echo "GitHub Workspace: $GITHUB_WORKSPACE"
-          ls -al $GITHUB_WORKSPACE
-          ls -al $GITHUB_WORKSPACE/starter
-          ls -al $GITHUB_WORKSPACE/starter/frontend
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: ${{ github.workspace }}/starter/frontend/package-lock.json
-
+          cache-dependency-path: starter/frontend/package-lock.json
       - name: Install dependencies
         run: npm ci
-        working-directory: ${{ github.workspace }}/starter/frontend
-
+        working-directory: starter/frontend
       - name: Run tests
         run: CI=true npm test
-        working-directory: ${{ github.workspace }}/starter/frontend
+        working-directory: starter/frontend
 
   build:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Debug Path
-        run: |
-          echo "Current Directory: $(pwd)"
-          echo "GitHub Workspace: $GITHUB_WORKSPACE"
-          ls -al $GITHUB_WORKSPACE
-          ls -al $GITHUB_WORKSPACE/starter
-          ls -al $GITHUB_WORKSPACE/starter/frontend
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: ${{ github.workspace }}/starter/frontend/package-lock.json
-
+          cache-dependency-path: starter/frontend/package-lock.json
       - name: Install dependencies
         run: npm ci
-        working-directory: ${{ github.workspace }}/starter/frontend
-
+        working-directory: starter/frontend
       - name: Build application
         run: npm run build
-        working-directory: ${{ github.workspace }}/starter/frontend
+        working-directory: starter/frontend
