@@ -118,7 +118,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    deploy:
+  deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     defaults:
@@ -153,3 +153,4 @@ jobs:
         run: |
           kustomize edit set image frontend=${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
           kustomize build | kubectl apply -f - --validate=false
+
