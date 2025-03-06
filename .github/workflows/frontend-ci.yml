@@ -4,7 +4,7 @@ name: Frontend CI
 on:
   # Triggers the workflow on pull request events but only for the "main" branch and frontend changes
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - 'starter/frontend/**'
   # Allows you to run this workflow manually from the Actions tab
@@ -12,7 +12,7 @@ on:
 
 # Environment
 env:
-  NODE_VERSION: 16
+  NODE_VERSION: 18.18.0
   IMAGE_REPO_NAME: frontend
   
 jobs:
@@ -42,7 +42,7 @@ jobs:
         run: npm ci
 
       - name: Run lint
-        run: npm run lint
+        run: npm run lint -- --fix
           
   test:
     name: Test Job
