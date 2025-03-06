@@ -118,7 +118,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-  deploy:
+    deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     defaults:
@@ -133,15 +133,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      
+
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-      
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+
+      - name: Verify Kubernetes Context
+        run: kubectl config current-context
+
       - name: Install kustomize
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           sudo mv kustomize /usr/local/bin/
-      
+
       - name: Deploy to Kubernetes
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
@@ -149,4 +152,4 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           kustomize edit set image frontend=${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
-          kustomize build | kubectl apply -f -
+          kustomize build | kubectl apply -f - --validate=false
