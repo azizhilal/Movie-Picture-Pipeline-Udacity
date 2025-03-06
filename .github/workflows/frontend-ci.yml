@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run linting
-        run: npm run lint || true
+        run: npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run tests
-        run: CI=true npm test -- --passWithNoTests
+        run: CI=true npm test
 
   build:
     needs: [lint, test]
