@@ -1,16 +1,12 @@
 name: Frontend CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the "main" branch and frontend changes
   pull_request:
     branches: [ "master" ]
     paths:
       - 'starter/frontend/**'
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Environment
 env:
   NODE_VERSION: 18.18.0
   IMAGE_REPO_NAME: frontend
