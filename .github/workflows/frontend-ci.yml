@@ -10,9 +10,6 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
@@ -20,17 +17,14 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: './starter/frontend/package-lock.json'
+          cache-dependency-path: 'starter/frontend/package-lock.json'
       - name: Install dependencies
-        run: npm ci
+        run: cd starter/frontend && npm ci
       - name: Run linting
-        run: npm run lint
+        run: cd starter/frontend && npm run lint
 
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
@@ -38,18 +32,15 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: './starter/frontend/package-lock.json'
+          cache-dependency-path: 'starter/frontend/package-lock.json'
       - name: Install dependencies
-        run: npm ci
+        run: cd starter/frontend && npm ci
       - name: Run tests
-        run: CI=true npm test
+        run: cd starter/frontend && CI=true npm test
 
   build:
     needs: [lint, test]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./starter/frontend
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
@@ -57,8 +48,8 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: './starter/frontend/package-lock.json'
+          cache-dependency-path: 'starter/frontend/package-lock.json'
       - name: Install dependencies
-        run: npm ci
+        run: cd starter/frontend && npm ci
       - name: Build application
-        run: npm run build
+        run: cd starter/frontend && npm run build
