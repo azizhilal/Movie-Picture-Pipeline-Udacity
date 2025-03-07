@@ -126,7 +126,7 @@ jobs:
         working-directory: ./starter/frontend/k8s
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -134,12 +134,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Debug AWS Access
+        run: |
+          echo "Testing AWS authentication..."
+          aws sts get-caller-identity
+
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+        run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
-      - name: Verify Kubernetes Context
-        run: kubectl config current-context
-
+      - name: Debug Kubernetes Access
+        run: |
+          echo "Testing Kubernetes authentication..."
+          kubectl cluster-info
+          kubectl get nodes || echo "Failed to get nodes"
+          kubectl get pods -A || echo "Failed to get pods"
+      
       - name: Install kustomize
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
@@ -153,4 +162,5 @@ jobs:
         run: |
           kustomize edit set image frontend=${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
           kustomize build | kubectl apply -f - --validate=false
+
 
